@@ -19,7 +19,7 @@ public class AddTask extends AppCompatActivity {
         Button addButton = AddTask.this.findViewById(R.id.addTaskNow);
         addButton.setOnClickListener((view) -> {
 
-            Toast.makeText(getApplicationContext(), "Task Added!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Task Added!", Toast.LENGTH_SHORT).show();
 
         });
 

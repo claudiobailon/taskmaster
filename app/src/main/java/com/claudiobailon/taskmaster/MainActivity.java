@@ -3,10 +3,26 @@ package com.claudiobailon.taskmaster;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import java.util.function.Predicate;
 
 public class MainActivity extends AppCompatActivity {
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        TextView username = findViewById(R.id.displayUsername);
+        username.setText(preferences.getString("username", "Go to Settings to create username"));
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +42,42 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Going to All Tasks");
             Intent goToAllTasksIntent = new Intent(MainActivity.this, AllTasks.class);
             MainActivity.this.startActivity(goToAllTasksIntent);
+        });
+
+        ImageButton goToSettings = MainActivity.this.findViewById(R.id.settingsButton);
+        goToSettings.setOnClickListener((view)-> {
+            System.out.println("Going to Settings");
+            Intent goToSettingsIntent = new Intent(MainActivity.this, Settings.class);
+            MainActivity.this.startActivity(goToSettingsIntent);
+        });
+
+// can this be made more efficient?
+
+        Button mowButton = findViewById(R.id.mowTask);
+        mowButton.setOnClickListener((view)-> {
+            System.out.println("Going to Task Details");
+            Button taskButton = (Button) view;
+            Intent goToTaskDetailIntent = new Intent(MainActivity.this, TaskDetail.class);
+            goToTaskDetailIntent.putExtra("task", taskButton.getText().toString());
+            MainActivity.this.startActivity(goToTaskDetailIntent);
+        });
+
+        Button washButton = findViewById(R.id.washTask);
+        washButton.setOnClickListener((view)-> {
+            System.out.println("Going to Task Details");
+            Button taskButton = (Button) view;
+            Intent goToTaskDetailIntent = new Intent(MainActivity.this, TaskDetail.class);
+            goToTaskDetailIntent.putExtra("task", taskButton.getText().toString());
+            MainActivity.this.startActivity(goToTaskDetailIntent);
+        });
+
+        Button trashButton = findViewById(R.id.trashTask);
+        trashButton.setOnClickListener((view)-> {
+            System.out.println("Going to Task Details");
+            Button taskButton = (Button) view;
+            Intent goToTaskDetailIntent = new Intent(MainActivity.this, TaskDetail.class);
+            goToTaskDetailIntent.putExtra("task", taskButton.getText().toString());
+            MainActivity.this.startActivity(goToTaskDetailIntent);
         });
     }
 
