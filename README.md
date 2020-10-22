@@ -11,3 +11,5 @@ Added three task buttons to home page that link to a task details page.  The tas
 the name of the task of the button that you clicked and also allows you to navigate back home.  A settings
 page was also added with a link to it on the home page.  In the setting page, you can set a username that will
 then display on the homepage. 
+### 10-21-2020
+
