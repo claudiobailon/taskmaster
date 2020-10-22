@@ -34,22 +34,23 @@ public class MainActivity extends AppCompatActivity {
 
         //state types are : new, assigned, in progress, and complete
         ArrayList<Task> tasks = new ArrayList<>();
-        tasks.add(new Task("Mow", "Mow the lawn","assigned"));
-        tasks.add(new Task("Wash Dishes", "Wash the dishes","in progress"));
-        tasks.add(new Task("Trash", "Take out the trash","complete"));
-        tasks.add(new Task("Exercise", "Get that body movin!","new"));
-        tasks.add(new Task("Mow", "Mow the lawn","assigned"));
-        tasks.add(new Task("Wash Dishes", "Wash the dishes","in progress"));
-        tasks.add(new Task("Trash", "Take out the trash","complete"));
-        tasks.add(new Task("Exercise", "Get that body movin!","new"));
-        tasks.add(new Task("Mow", "Mow the lawn","assigned"));
-        tasks.add(new Task("Wash Dishes", "Wash the dishes","in progress"));
-        tasks.add(new Task("Trash", "Take out the trash","complete"));
-        tasks.add(new Task("Exercise", "Get that body movin!","new"));
-        tasks.add(new Task("Mow", "Mow the lawn","assigned"));
-        tasks.add(new Task("Wash Dishes", "Wash the dishes","in progress"));
-        tasks.add(new Task("Trash", "Take out the trash","complete"));
-        tasks.add(new Task("Exercise", "Get that body movin!","new"));
+        tasks.add(new Task("Mow", "Mow the lawn","Assigned"));
+        tasks.add(new Task("Wash Dishes", "Wash the dishes","In Progress"));
+        tasks.add(new Task("Trash", "Take out the trash","Complete"));
+        tasks.add(new Task("Exercise", "Get that body movin!","New"));
+        tasks.add(new Task("Mow", "Mow the lawn","Assigned"));
+        tasks.add(new Task("Wash Dishes", "Wash the dishes","In Progress"));
+        tasks.add(new Task("Trash", "Take out the trash","Complete"));
+        tasks.add(new Task("Exercise", "Get that body movin!","New"));
+        tasks.add(new Task("Mow", "Mow the lawn","Assigned"));
+        tasks.add(new Task("Wash Dishes", "Wash the dishes","In Progress"));
+        tasks.add(new Task("Trash", "Take out the trash","Complete"));
+        tasks.add(new Task("Exercise", "Get that body movin!","New"));
+        tasks.add(new Task("Mow", "Mow the lawn","Assigned"));
+        tasks.add(new Task("Wash Dishes", "Wash the dishes","In Progress"));
+        tasks.add(new Task("Trash", "Take out the trash","Complete"));
+        tasks.add(new Task("Exercise", "Get that body movin!","New"));
+
 
         RecyclerView recyclerView = findViewById(R.id.tasksListView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

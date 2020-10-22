@@ -17,8 +17,13 @@ public class TaskDetail extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        TextView taskName = findViewById(R.id.taskName);
-        taskName.setText(intent.getExtras().getString("task"));
+        TextView taskTitle = findViewById(R.id.taskTitleText);
+        TextView taskBody = findViewById(R.id.taskBodyText);
+        TextView taskState = findViewById(R.id.taskStateText);
+
+        taskTitle.setText(intent.getExtras().getString("title"));
+        taskBody.setText(intent.getExtras().getString("body"));
+        taskState.setText(intent.getExtras().getString("state"));
     }
 
     @Override
