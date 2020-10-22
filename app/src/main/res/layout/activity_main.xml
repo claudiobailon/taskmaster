@@ -53,45 +53,27 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_manage" />
 
-    <Button
-        android:id="@+id/mowTask"
-        android:layout_width="215dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="80dp"
-        android:text="Mow The Lawn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <Button
-        android:id="@+id/washTask"
-        android:layout_width="215dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="40dp"
-        android:text="Wash The Dishes"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mowTask" />
-
-    <Button
-        android:id="@+id/trashTask"
-        android:layout_width="215dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="40dp"
-        android:text="Take Out the Trash"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/washTask" />
-
     <TextView
         android:id="@+id/displayUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/mowTask"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.409"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
         tools:text="placeholder" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tasksListView"
+        android:layout_width="264dp"
+        android:layout_height="324dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/addTask"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/displayUsername"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
