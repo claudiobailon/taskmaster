@@ -26,6 +26,18 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.Inter
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         TextView username = findViewById(R.id.displayUsername);
         username.setText(preferences.getString("username", "Go to Settings to create username"));
+
+        db = Room.databaseBuilder(getApplicationContext(), Database.class, "claudiobailon_task_master")
+                .allowMainThreadQueries()
+                .build();
+
+        ArrayList<Task> tasks = (ArrayList<Task>) db.taskDAO().getRecentTasks();
+
+        RecyclerView recyclerView = findViewById(R.id.tasksListView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new TaskAdapter(tasks, this));
+
+
     }
 
 
@@ -39,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.Inter
                 .build();
 //        Task mow = new Task("Mow", "Mow the lawn","Assigned");
 //        db.taskDAO().saveTask(mow);
-        ArrayList<Task> tasks = (ArrayList<Task>) db.taskDAO().getAllTasks();
+//        ArrayList<Task> tasks = (ArrayList<Task>) db.taskDAO().getRecentTasks();
 
         //state types are : new, assigned, in progress, and complete
 //        tasks.add(new Task("Mow", "Mow the lawn","Assigned"));
@@ -47,11 +59,11 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.Inter
 //        tasks.add(new Task("Trash", "Take out the trash","Complete"));
 //        tasks.add(new Task("Exercise", "Get that body movin!","New"));
 
-
-
-        RecyclerView recyclerView = findViewById(R.id.tasksListView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new TaskAdapter(tasks, this::listener));
+//
+//
+//        RecyclerView recyclerView = findViewById(R.id.tasksListView);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.setAdapter(new TaskAdapter(tasks, this));
 
         Button goToAddTask = MainActivity.this.findViewById(R.id.addTask);
         goToAddTask.setOnClickListener((view)-> {

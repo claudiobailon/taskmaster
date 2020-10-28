@@ -14,6 +14,8 @@ public interface TaskDAO {
     @Query("SELECT * FROM task")
     public List<Task> getAllTasks();
 
+    @Query("SELECT * FROM task ORDER BY id DESC")
+    public List<Task> getRecentTasks();
 
 
 }
