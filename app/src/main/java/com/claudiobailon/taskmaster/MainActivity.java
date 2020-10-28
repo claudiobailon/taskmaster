@@ -3,6 +3,7 @@ package com.claudiobailon.taskmaster;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,7 +15,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TaskAdapter.InteractWithTaskListener {
+
+    Database db;
 
     @Override
     public void onResume() {
@@ -31,25 +34,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        db = Room.databaseBuilder(getApplicationContext(), Database.class, "claudiobailon_task_master")
+                .allowMainThreadQueries()
+                .build();
+//        Task mow = new Task("Mow", "Mow the lawn","Assigned");
+//        db.taskDAO().saveTask(mow);
+        ArrayList<Task> tasks = (ArrayList<Task>) db.taskDAO().getAllTasks();
 
         //state types are : new, assigned, in progress, and complete
-        ArrayList<Task> tasks = new ArrayList<>();
-        tasks.add(new Task("Mow", "Mow the lawn","Assigned"));
-        tasks.add(new Task("Wash Dishes", "Wash the dishes","In Progress"));
-        tasks.add(new Task("Trash", "Take out the trash","Complete"));
-        tasks.add(new Task("Exercise", "Get that body movin!","New"));
-        tasks.add(new Task("Mow", "Mow the lawn","Assigned"));
-        tasks.add(new Task("Wash Dishes", "Wash the dishes","In Progress"));
-        tasks.add(new Task("Trash", "Take out the trash","Complete"));
-        tasks.add(new Task("Exercise", "Get that body movin!","New"));
-        tasks.add(new Task("Mow", "Mow the lawn","Assigned"));
-        tasks.add(new Task("Wash Dishes", "Wash the dishes","In Progress"));
-        tasks.add(new Task("Trash", "Take out the trash","Complete"));
-        tasks.add(new Task("Exercise", "Get that body movin!","New"));
-        tasks.add(new Task("Mow", "Mow the lawn","Assigned"));
-        tasks.add(new Task("Wash Dishes", "Wash the dishes","In Progress"));
-        tasks.add(new Task("Trash", "Take out the trash","Complete"));
-        tasks.add(new Task("Exercise", "Get that body movin!","New"));
+//        tasks.add(new Task("Mow", "Mow the lawn","Assigned"));
+//        tasks.add(new Task("Wash Dishes", "Wash the dishes","In Progress"));
+//        tasks.add(new Task("Trash", "Take out the trash","Complete"));
+//        tasks.add(new Task("Exercise", "Get that body movin!","New"));
+
 
 
         RecyclerView recyclerView = findViewById(R.id.tasksListView);
@@ -78,37 +75,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-// can this be made more efficient?
-//
-//        Button mowButton = findViewById(R.id.mowTask);
-//        mowButton.setOnClickListener((view)-> {
-//            System.out.println("Going to Task Details");
-//            Button taskButton = (Button) view;
-//            Intent goToTaskDetailIntent = new Intent(MainActivity.this, TaskDetail.class);
-//            goToTaskDetailIntent.putExtra("task", taskButton.getText().toString());
-//            MainActivity.this.startActivity(goToTaskDetailIntent);
-//        });
-//
-//        Button washButton = findViewById(R.id.washTask);
-//        washButton.setOnClickListener((view)-> {
-//            System.out.println("Going to Task Details");
-//            Button taskButton = (Button) view;
-//            Intent goToTaskDetailIntent = new Intent(MainActivity.this, TaskDetail.class);
-//            goToTaskDetailIntent.putExtra("task", taskButton.getText().toString());
-//            MainActivity.this.startActivity(goToTaskDetailIntent);
-//        });
-//
-//        Button trashButton = findViewById(R.id.trashTask);
-//        trashButton.setOnClickListener((view)-> {
-//            System.out.println("Going to Task Details");
-//            Button taskButton = (Button) view;
-//            Intent goToTaskDetailIntent = new Intent(MainActivity.this, TaskDetail.class);
-//            goToTaskDetailIntent.putExtra("task", taskButton.getText().toString());
-//            MainActivity.this.startActivity(goToTaskDetailIntent);
-//        });
     }
 
-//    @Override
+    @Override
     public void listener(Task task){
         Intent goToTaskDetailIntent = new Intent(MainActivity.this, TaskDetail.class);
         goToTaskDetailIntent.putExtra("title", task.title);

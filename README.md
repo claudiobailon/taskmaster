@@ -12,6 +12,6 @@ the name of the task of the button that you clicked and also allows you to navig
 page was also added with a link to it on the home page.  In the setting page, you can set a username that will
 then display on the homepage. 
 ### 10-21-2020
-Created task class set set up a recylerView for homepage. Hardcoded an arrayList of tasks to be displayed in 
+Created task class and set up a recylerView for homepage. Hardcoded an arrayList of tasks to be displayed in 
 the new recyclerView, then made each task clickable and display the title, body, and state in the detail view 
 they are sent to.  
