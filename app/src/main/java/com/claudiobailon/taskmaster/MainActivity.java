@@ -13,11 +13,16 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.amplifyframework.AmplifyException;
+import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.core.Amplify;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements TaskAdapter.InteractWithTaskListener {
 
     Database db;
+    ArrayList<Task> tasks = (ArrayList<Task>) db.taskDAO().getRecentTasks();
 
     @Override
     public void onResume() {
@@ -31,15 +36,30 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.Inter
                 .allowMainThreadQueries()
                 .build();
 
-        ArrayList<Task> tasks = (ArrayList<Task>) db.taskDAO().getRecentTasks();
 
-        RecyclerView recyclerView = findViewById(R.id.tasksListView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new TaskAdapter(tasks, this));
-
+        setupRecyclerView();
 
     }
 
+//=========ReycylerView things=================================
+
+    public void setupRecyclerView(){
+        RecyclerView recyclerView = findViewById(R.id.tasksListView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new TaskAdapter(tasks, this));
+    }
+    //=========================================
+
+    //===================== AWS ======================
+    public void configureAws(){
+        try {
+            Amplify.addPlugin(new AWSApiPlugin());
+            Amplify.configure(getApplicationContext());
+        } catch (AmplifyException e) {
+            e.printStackTrace();
+        }
+    }
+    //==========================================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,21 +69,9 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.Inter
         db = Room.databaseBuilder(getApplicationContext(), Database.class, "claudiobailon_task_master")
                 .allowMainThreadQueries()
                 .build();
-//        Task mow = new Task("Mow", "Mow the lawn","Assigned");
-//        db.taskDAO().saveTask(mow);
-//        ArrayList<Task> tasks = (ArrayList<Task>) db.taskDAO().getRecentTasks();
 
-        //state types are : new, assigned, in progress, and complete
-//        tasks.add(new Task("Mow", "Mow the lawn","Assigned"));
-//        tasks.add(new Task("Wash Dishes", "Wash the dishes","In Progress"));
-//        tasks.add(new Task("Trash", "Take out the trash","Complete"));
-//        tasks.add(new Task("Exercise", "Get that body movin!","New"));
+        configureAws();
 
-//
-//
-//        RecyclerView recyclerView = findViewById(R.id.tasksListView);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.setAdapter(new TaskAdapter(tasks, this));
 
         Button goToAddTask = MainActivity.this.findViewById(R.id.addTask);
         goToAddTask.setOnClickListener((view)-> {
