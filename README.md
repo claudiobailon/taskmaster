@@ -4,6 +4,9 @@ An app to master your tasks!
 ![Homepage](screenshots/28homepage.png) 
 ![All Tasks](screenshots/28taskdetails.png)
 ## Change Log
+### 11-14-20
+Added Amplify and dynamoDb so that recyclerview shows items added to dynamodb from the add tasks page. Attempted to 
+add cognito, storage, and notifications, but adding dependencies made gradle crash and I could not figure out why. 
 ### 10-22-2020
 Added Room database dependencies to build.gradle and made Task an Entity.  Set up Database and taskTAO. Made 
 add task page save form submissions into database and display them on home page. 

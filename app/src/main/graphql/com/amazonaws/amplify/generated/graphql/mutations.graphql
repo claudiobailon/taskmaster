@@ -5,9 +5,26 @@ mutation CreateTask(
 ) {
   createTask(input: $input, condition: $condition) {
     id
+    taskID
+    stateID
     title
     body
-    state
+    filekey
+    state {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+    team {
+      id
+      name
+      tasks {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }
@@ -18,9 +35,26 @@ mutation UpdateTask(
 ) {
   updateTask(input: $input, condition: $condition) {
     id
+    taskID
+    stateID
     title
     body
-    state
+    filekey
+    state {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+    team {
+      id
+      name
+      tasks {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }
@@ -31,9 +65,131 @@ mutation DeleteTask(
 ) {
   deleteTask(input: $input, condition: $condition) {
     id
+    taskID
+    stateID
     title
     body
-    state
+    filekey
+    state {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+    team {
+      id
+      name
+      tasks {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateState(
+  $input: CreateStateInput!
+  $condition: ModelStateConditionInput
+) {
+  createState(input: $input, condition: $condition) {
+    id
+    name
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateState(
+  $input: UpdateStateInput!
+  $condition: ModelStateConditionInput
+) {
+  updateState(input: $input, condition: $condition) {
+    id
+    name
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteState(
+  $input: DeleteStateInput!
+  $condition: ModelStateConditionInput
+) {
+  deleteState(input: $input, condition: $condition) {
+    id
+    name
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateTeam(
+  $input: CreateTeamInput!
+  $condition: ModelTeamConditionInput
+) {
+  createTeam(input: $input, condition: $condition) {
+    id
+    name
+    tasks {
+      items {
+        id
+        taskID
+        stateID
+        title
+        body
+        filekey
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateTeam(
+  $input: UpdateTeamInput!
+  $condition: ModelTeamConditionInput
+) {
+  updateTeam(input: $input, condition: $condition) {
+    id
+    name
+    tasks {
+      items {
+        id
+        taskID
+        stateID
+        title
+        body
+        filekey
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteTeam(
+  $input: DeleteTeamInput!
+  $condition: ModelTeamConditionInput
+) {
+  deleteTeam(input: $input, condition: $condition) {
+    id
+    name
+    tasks {
+      items {
+        id
+        taskID
+        stateID
+        title
+        body
+        filekey
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }

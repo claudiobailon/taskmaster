@@ -2,9 +2,26 @@
 subscription OnCreateTask {
   onCreateTask {
     id
+    taskID
+    stateID
     title
     body
-    state
+    filekey
+    state {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+    team {
+      id
+      name
+      tasks {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }
@@ -12,9 +29,26 @@ subscription OnCreateTask {
 subscription OnUpdateTask {
   onUpdateTask {
     id
+    taskID
+    stateID
     title
     body
-    state
+    filekey
+    state {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+    team {
+      id
+      name
+      tasks {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }
@@ -22,9 +56,113 @@ subscription OnUpdateTask {
 subscription OnDeleteTask {
   onDeleteTask {
     id
+    taskID
+    stateID
     title
     body
-    state
+    filekey
+    state {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+    team {
+      id
+      name
+      tasks {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateState {
+  onCreateState {
+    id
+    name
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateState {
+  onUpdateState {
+    id
+    name
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteState {
+  onDeleteState {
+    id
+    name
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateTeam {
+  onCreateTeam {
+    id
+    name
+    tasks {
+      items {
+        id
+        taskID
+        stateID
+        title
+        body
+        filekey
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateTeam {
+  onUpdateTeam {
+    id
+    name
+    tasks {
+      items {
+        id
+        taskID
+        stateID
+        title
+        body
+        filekey
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteTeam {
+  onDeleteTeam {
+    id
+    name
+    tasks {
+      items {
+        id
+        taskID
+        stateID
+        title
+        body
+        filekey
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }

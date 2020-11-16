@@ -94,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.Inter
     public void configureAws(){
         try {
             Amplify.addPlugin(new AWSApiPlugin());
+//            Amplify.addPlugin(new AWSCognitoAuthPlugin());
+//            Amplify.addPlugin(new AWSS3StoragePlugin());
             Amplify.configure(getApplicationContext());
 
             Log.i("MainActivityAmplify", "Initialized Amplify");

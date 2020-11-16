@@ -1,5 +1,7 @@
 package com.amplifyframework.datastore.generated.model;
 
+import com.amplifyframework.core.model.annotations.HasOne;
+import com.amplifyframework.core.model.annotations.BelongsTo;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,17 +20,27 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 /** This is an auto generated class representing the Task type in your schema. */
 @SuppressWarnings("all")
 @ModelConfig(pluralName = "Tasks")
+@Index(name = "byTask", fields = {"taskID"})
 public final class Task implements Model {
   public static final QueryField ID = field("id");
+  public static final QueryField STATE_ID = field("stateID");
   public static final QueryField TITLE = field("title");
   public static final QueryField BODY = field("body");
-  public static final QueryField STATE = field("state");
+  public static final QueryField FILEKEY = field("filekey");
+  public static final QueryField TEAM = field("taskID");
   private final @ModelField(targetType="ID", isRequired = true) String id;
-  public final @ModelField(targetType="String", isRequired = true) String title;
-  public final @ModelField(targetType="String") String body;
-  public final @ModelField(targetType="String") String state;
+  private final @ModelField(targetType="ID", isRequired = true) String stateID;
+  private final @ModelField(targetType="String", isRequired = true) String title;
+  private final @ModelField(targetType="String") String body;
+  private final @ModelField(targetType="String") String filekey;
+  private final @ModelField(targetType="State") @HasOne(associatedWith = "id", type = State.class) State state = null;
+  private final @ModelField(targetType="Team") @BelongsTo(targetName = "taskID", type = Team.class) Team team;
   public String getId() {
       return id;
+  }
+  
+  public String getStateId() {
+      return stateID;
   }
   
   public String getTitle() {
@@ -39,15 +51,25 @@ public final class Task implements Model {
       return body;
   }
   
-  public String getState() {
+  public String getFilekey() {
+      return filekey;
+  }
+  
+  public State getState() {
       return state;
   }
   
-  private Task(String id, String title, String body, String state) {
+  public Team getTeam() {
+      return team;
+  }
+  
+  private Task(String id, String stateID, String title, String body, String filekey, Team team) {
     this.id = id;
+    this.stateID = stateID;
     this.title = title;
     this.body = body;
-    this.state = state;
+    this.filekey = filekey;
+    this.team = team;
   }
   
   @Override
@@ -59,9 +81,11 @@ public final class Task implements Model {
       } else {
       Task task = (Task) obj;
       return ObjectsCompat.equals(getId(), task.getId()) &&
+              ObjectsCompat.equals(getStateId(), task.getStateId()) &&
               ObjectsCompat.equals(getTitle(), task.getTitle()) &&
               ObjectsCompat.equals(getBody(), task.getBody()) &&
-              ObjectsCompat.equals(getState(), task.getState());
+              ObjectsCompat.equals(getFilekey(), task.getFilekey()) &&
+              ObjectsCompat.equals(getTeam(), task.getTeam());
       }
   }
   
@@ -69,9 +93,11 @@ public final class Task implements Model {
    public int hashCode() {
     return new StringBuilder()
       .append(getId())
+      .append(getStateId())
       .append(getTitle())
       .append(getBody())
-      .append(getState())
+      .append(getFilekey())
+      .append(getTeam())
       .toString()
       .hashCode();
   }
@@ -81,14 +107,16 @@ public final class Task implements Model {
     return new StringBuilder()
       .append("Task {")
       .append("id=" + String.valueOf(getId()) + ", ")
+      .append("stateID=" + String.valueOf(getStateId()) + ", ")
       .append("title=" + String.valueOf(getTitle()) + ", ")
       .append("body=" + String.valueOf(getBody()) + ", ")
-      .append("state=" + String.valueOf(getState()))
+      .append("filekey=" + String.valueOf(getFilekey()) + ", ")
+      .append("team=" + String.valueOf(getTeam()))
       .append("}")
       .toString();
   }
   
-  public static TitleStep builder() {
+  public static StateIdStep builder() {
       return new Builder();
   }
   
@@ -115,16 +143,25 @@ public final class Task implements Model {
       id,
       null,
       null,
+      null,
+      null,
       null
     );
   }
   
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
+      stateID,
       title,
       body,
-      state);
+      filekey,
+      team);
   }
+  public interface StateIdStep {
+    TitleStep stateId(String stateId);
+  }
+  
+
   public interface TitleStep {
     BuildStep title(String title);
   }
@@ -134,24 +171,36 @@ public final class Task implements Model {
     Task build();
     BuildStep id(String id) throws IllegalArgumentException;
     BuildStep body(String body);
-    BuildStep state(String state);
+    BuildStep filekey(String filekey);
+    BuildStep team(Team team);
   }
   
 
-  public static class Builder implements TitleStep, BuildStep {
+  public static class Builder implements StateIdStep, TitleStep, BuildStep {
     private String id;
+    private String stateID;
     private String title;
     private String body;
-    private String state;
+    private String filekey;
+    private Team team;
     @Override
      public Task build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
         
         return new Task(
           id,
+          stateID,
           title,
           body,
-          state);
+          filekey,
+          team);
+    }
+    
+    @Override
+     public TitleStep stateId(String stateId) {
+        Objects.requireNonNull(stateId);
+        this.stateID = stateId;
+        return this;
     }
     
     @Override
@@ -168,8 +217,14 @@ public final class Task implements Model {
     }
     
     @Override
-     public BuildStep state(String state) {
-        this.state = state;
+     public BuildStep filekey(String filekey) {
+        this.filekey = filekey;
+        return this;
+    }
+    
+    @Override
+     public BuildStep team(Team team) {
+        this.team = team;
         return this;
     }
     
@@ -196,11 +251,18 @@ public final class Task implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String title, String body, String state) {
+    private CopyOfBuilder(String id, String stateId, String title, String body, String filekey, Team team) {
       super.id(id);
-      super.title(title)
+      super.stateId(stateId)
+        .title(title)
         .body(body)
-        .state(state);
+        .filekey(filekey)
+        .team(team);
+    }
+    
+    @Override
+     public CopyOfBuilder stateId(String stateId) {
+      return (CopyOfBuilder) super.stateId(stateId);
     }
     
     @Override
@@ -214,8 +276,13 @@ public final class Task implements Model {
     }
     
     @Override
-     public CopyOfBuilder state(String state) {
-      return (CopyOfBuilder) super.state(state);
+     public CopyOfBuilder filekey(String filekey) {
+      return (CopyOfBuilder) super.filekey(filekey);
+    }
+    
+    @Override
+     public CopyOfBuilder team(Team team) {
+      return (CopyOfBuilder) super.team(team);
     }
   }
   
