@@ -5,14 +5,22 @@ import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.amplifyframework.AmplifyException;
+import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Task;
+
 public class AddTask extends AppCompatActivity {
 
-    Database db;
+//    Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,21 +29,7 @@ public class AddTask extends AppCompatActivity {
 
 
         Button addButton = AddTask.this.findViewById(R.id.addTaskNow);
-        addButton.setOnClickListener((view) -> {
-
-            Toast.makeText(getApplicationContext(), "Task Added!", Toast.LENGTH_SHORT).show();
-
-            db = Room.databaseBuilder(getApplicationContext(),Database.class, "claudiobailon_task_master")
-                    .allowMainThreadQueries()
-                    .build();
-
-            EditText title = findViewById(R.id.taskTitle);
-            EditText body = findViewById(R.id.taskDescription);
-
-            Task task = new Task(title.getText().toString(),body.getText().toString(),"new");
-            db.taskDAO().saveTask(task);
-
-        });
+        addButton.setOnClickListener(this::onClick);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -44,5 +38,29 @@ public class AddTask extends AppCompatActivity {
         Intent intent = new Intent(AddTask.this, MainActivity.class);
         AddTask.this.startActivity(intent);
         return true;
+    }
+
+    private void onClick(View view) {
+
+        Toast.makeText(getApplicationContext(), "Task Added!", Toast.LENGTH_SHORT).show();
+
+//            db = Room.databaseBuilder(getApplicationContext(),Database.class, "claudiobailon_task_master")
+//                    .allowMainThreadQueries()
+//                    .build();
+
+        EditText title = findViewById(R.id.taskTitle);
+        EditText body = findViewById(R.id.taskDescription);
+
+        Task task = Task.builder()
+                .title(title.getText().toString())
+                .body(body.getText().toString())
+                .state("new")
+                .build();
+//          db.taskDAO().saveTask(task);
+
+         Amplify.API.mutate(ModelMutation.create(task),
+            success -> Log.i("AddTaskAmplify", "Task Added"),
+            error -> Log.e("AddTaskAmplify", error.toString()));
+
     }
 }

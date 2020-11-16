@@ -24,9 +24,9 @@ public final class Task implements Model {
   public static final QueryField BODY = field("body");
   public static final QueryField STATE = field("state");
   private final @ModelField(targetType="ID", isRequired = true) String id;
-  private final @ModelField(targetType="String", isRequired = true) String title;
-  private final @ModelField(targetType="String") String body;
-  private final @ModelField(targetType="String") String state;
+  public final @ModelField(targetType="String", isRequired = true) String title;
+  public final @ModelField(targetType="String") String body;
+  public final @ModelField(targetType="String") String state;
   public String getId() {
       return id;
   }
